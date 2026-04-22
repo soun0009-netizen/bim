@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<!-- saved from url=(0044)file:///C:/Users/j/Downloads/bim_v4-2_5.html -->
+<html lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>BIM v4 · 배너이미지메이커</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="BIM">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0a0a0f">
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDUxMiA1MTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiByeD0iODAiIGZpbGw9IiMwYTBhMGYiLz4KPGNpcmNsZSBjeD0iMTkwIiBjeT0iMTkwIiByPSIxMTAiIGZpbGw9IiMwMGJmYTUiIGZpbGwtb3BhY2l0eT0iMC44NSIvPgo8Y2lyY2xlIGN4PSIzMjIiIGN5PSIxOTAiIHI9IjExMCIgZmlsbD0iI2YwNjI5MiIgZmlsbC1vcGFjaXR5PSIwLjg1Ii8+CjxjaXJjbGUgY3g9IjE5MCIgY3k9IjMyMiIgcj0iMTEwIiBmaWxsPSIjZmZiMzAwIiBmaWxsLW9wYWNpdHk9IjAuODUiLz4KPGNpcmNsZSBjeD0iMzIyIiBjeT0iMzIyIiByPSIxMTAiIGZpbGw9IiMxYTZmZmYiIGZpbGwtb3BhY2l0eT0iMC44NSIvPgo8Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNTYiIHI9IjYwIiBmaWxsPSJ3aGl0ZSIgZmlsbC1vcGFjaXR5PSIwLjE1Ii8+Cjx0ZXh0IHg9IjI1NiIgeT0iMjY4IiBmb250LWZhbWlseT0iQXJpYWwgQmxhY2ssc2Fucy1zZXJpZiIgZm9udC1zaXplPSI3MiIgZm9udC13ZWlnaHQ9IjkwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiIGZpbGwtb3BhY2l0eT0iMC45Ij5CSU08L3RleHQ+Cjwvc3ZnPg==">
+<style>
+
+  :root {
+    --bg: #0a0a0f; --surface: #12121a; --surface2: #1a1a26;
+    --border: #2a2a3e; --accent: #7c6aff; --accent2: #b8a9ff;
+    --text: #e8e6ff; --muted: #6b6890; --success: #4fffb0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: Arial, sans-serif;
+    min-height: 100vh; display: flex; flex-direction: column; overflow-y: auto;
+  }
+
+  header {
+    padding: 12px 16px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 100; background: var(--bg);
+  }
+  .logo { font-family: Arial, sans-serif; font-weight: 800; font-size: 16px; color: var(--accent2); letter-spacing: 0.06em; }
+  .progress-wrap { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); }
+  .progress-bar { width: 80px; height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 2px; transition: width 0.4s ease; }
+
+  .slot-panel { padding: 14px 14px 60px; flex: 1; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .q-block { animation: fadeUp 0.25s ease; }
+
+  .q-step { font-size: 10px; letter-spacing: 0.15em; color: var(--accent); text-transform: uppercase; margin-bottom: 3px; }
+  .q-title { font-family: Arial, sans-serif; font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+  .q-desc { font-size: 12px; color: var(--muted); margin-bottom: 12px; line-height: 1.4; }
+
+  /* 일반 옵션 */
+  .options-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+  .opt {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; padding: 8px 12px; cursor: pointer;
+    transition: all 0.15s; position: relative;
+    display: flex; flex-direction: column; gap: 1px;
+  }
+  .opt.selected { border-color: var(--accent); background: #16132a; }
+  .opt-id { font-size: 10px; color: var(--accent); line-height: 1.1; }
+  .opt-name { font-family: Arial, sans-serif; font-size: 15px; font-weight: 600; color: var(--text); line-height: 1.2; }
+  .opt-desc { font-size: 11px; color: var(--muted); line-height: 1.2; }
+  .opt-check {
+    position: absolute; top: 8px; right: 10px;
+    width: 18px; height: 18px; background: var(--accent);
+    border-radius: 50%; display: none; align-items: center;
+    justify-content: center; font-size: 10px; color: #fff;
+  }
+  .opt.selected .opt-check { display: flex; }
+
+  /* 컬러 베이스 그리드 */
+  .color-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px 6px; margin-bottom: 16px; }
+  .color-btn {
+    background: none !important; border-radius: 0; padding: 0; cursor: pointer;
+    border: none; transition: all 0.15s;
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+  }
+  .color-btn.selected .color-swatch { box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--accent); }
+  .color-swatch { width: 28px; height: 28px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.2); transition: all 0.15s; }
+  .color-name { font-size: 9px; color: var(--muted); text-align: center; line-height: 1.2; font-family: Arial, sans-serif; }
+  .color-hex { display: none; }
+
+  /* 톤 그리드 */
+  .tone-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; margin-bottom: 16px; }
+  .tone-btn {
+    border-radius: 8px; padding: 10px; cursor: pointer;
+    border: 1px solid var(--border); background: var(--surface);
+    transition: all 0.15s; display: flex; flex-direction: column; gap: 3px;
+  }
+  .tone-btn.selected { border-color: var(--accent); background: #16132a; }
+  .tone-name { font-family: Arial, sans-serif; font-size: 14px; font-weight: 600; color: var(--text); }
+  .tone-desc { font-size: 10px; color: var(--muted); line-height: 1.2; }
+  .tone-bar { height: 6px; border-radius: 3px; margin-top: 4px; }
+
+  /* 콤보 리스트 */
+  .combo-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+  .combo-btn {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; padding: 8px 10px; cursor: pointer;
+    transition: all 0.15s; display: flex; align-items: center; gap: 10px;
+  }
+  .combo-btn.selected { border-color: var(--accent); background: #16132a; }
+  .combo-swatches { display: flex; gap: 3px; flex-shrink: 0; }
+  .combo-swatch { width: 22px; height: 22px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.15); }
+  .combo-info { flex: 1; min-width: 0; }
+  .combo-id { font-size: 10px; color: var(--accent); line-height: 1.1; }
+  .combo-name { font-family: Arial, sans-serif; font-size: 13px; font-weight: 600; color: var(--text); line-height: 1.2; }
+  .combo-desc { font-size: 11px; color: var(--muted); line-height: 1.2; }
+  .combo-check {
+    width: 16px; height: 16px; background: var(--accent);
+    border-radius: 50%; display: none; align-items: center;
+    justify-content: center; font-size: 9px; color: #fff; flex-shrink: 0;
+  }
+  .combo-btn.selected .combo-check { display: flex; }
+
+  .back-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: transparent; border: 1px solid var(--border);
+    color: var(--muted); font-family: Arial, sans-serif;
+    font-size: 12px; padding: 7px 14px; border-radius: 6px;
+    cursor: pointer; margin-bottom: 14px;
+  }
+
+  .done-screen {
+    display: none; flex-direction: column; align-items: center;
+    justify-content: center; gap: 10px; padding: 40px 24px;
+    text-align: center; flex: 1; animation: fadeUp 0.3s ease;
+  }
+  .done-icon { font-size: 36px; }
+  .done-title { font-family: Arial, sans-serif; font-size: 24px; font-weight: 800; color: var(--success); }
+  .done-sub { font-size: 12px; color: var(--muted); line-height: 1.6; max-width: 260px; }
+  .btn-reset {
+    margin-top: 6px; background: var(--surface2);
+    border: 1px solid var(--border); color: var(--text);
+    font-family: Arial, sans-serif; font-size: 13px;
+    padding: 10px 20px; border-radius: 8px; cursor: pointer;
+  }
+
+  .output-panel { padding: 14px 14px 60px; flex: 1; display: flex; flex-direction: column; gap: 12px; }
+  .panel-label { font-size: 10px; letter-spacing: 0.18em; color: var(--muted); text-transform: uppercase; margin-bottom: 8px; }
+
+  .recipe-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px; }
+  .recipe-name { font-family: Arial, sans-serif; font-size: 11px; font-weight: 700; color: var(--accent2); margin-bottom: 10px; word-break: break-all; }
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag { border: 1px solid var(--border); border-radius: 4px; padding: 3px 7px; font-size: 11px; line-height: 1.4; }
+  .tag .k { color: var(--muted); }
+  .tag .v { color: var(--accent2); margin-left: 3px; }
+
+  .prompt-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px; flex: 1; }
+  .prompt-empty { color: var(--muted); font-size: 12px; font-style: italic; }
+
+  .copy-btn {
+    width: 100%; background: transparent; border: 1px solid var(--accent);
+    color: var(--accent); font-family: Arial, sans-serif; font-size: 13px;
+    padding: 11px; border-radius: 8px; cursor: pointer; letter-spacing: 0.08em; transition: all 0.18s;
+  }
+  .copy-btn:active { background: var(--accent); color: #fff; }
+  .copy-btn.copied { background: var(--success); border-color: var(--success); color: #000; }
+
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  /* 하단 고정 버튼 */
+  .bottom-nav {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    display: flex; gap: 8px; padding: 10px 14px 20px;
+    background: linear-gradient(transparent, var(--bg) 30%);
+    z-index: 200;
+  }
+  .btn-back-fixed {
+    flex: 1; background: var(--surface2); border: 1px solid var(--border);
+    color: var(--muted); font-family: Arial, sans-serif;
+    font-size: 13px; padding: 11px; border-radius: 8px; cursor: pointer;
+    transition: all 0.15s; letter-spacing: 0.05em;
+  }
+  .btn-back-fixed:active { border-color: var(--accent); color: var(--accent); }
+  .btn-reset-fixed {
+    flex: 1; background: var(--surface2); border: 1px solid var(--border);
+    color: var(--muted); font-family: Arial, sans-serif;
+    font-size: 13px; padding: 11px; border-radius: 8px; cursor: pointer;
+    transition: all 0.15s; letter-spacing: 0.05em;
+  }
+  .btn-reset-fixed:active { border-color: #ef4444; color: #ef4444; }
+
+  /* fal.ai 연동 스타일 */
+  .fal-section {
+    margin-top: 12px; border: 1px solid #2a2a3e;
+    border-radius: 10px; overflow: hidden;
+  }
+  .fal-header {
+    background: #0f0f1a; padding: 10px 12px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid #2a2a3e;
+  }
+  .fal-label {
+    font-size: 10px; letter-spacing: 0.18em; color: #6b6890;
+    text-transform: uppercase;
+  }
+  .fal-badge {
+    font-size: 9px; background: #1a1a2e; border: 1px solid #3a3a5e;
+    color: #7c6aff; padding: 2px 7px; border-radius: 20px;
+  }
+  .fal-body { padding: 12px; }
+  .fal-key-row {
+    display: flex; gap: 6px; margin-bottom: 10px;
+  }
+  .fal-key-input {
+    flex: 1; background: #0d0d18; border: 1px solid #2a2a3e;
+    color: #e8e6ff; font-family: monospace; font-size: 12px;
+    padding: 8px 10px; border-radius: 6px; outline: none;
+    transition: border-color 0.15s;
+  }
+  .fal-key-input:focus { border-color: #7c6aff; }
+  .fal-key-input::placeholder { color: #3a3a5e; }
+  .fal-save-btn {
+    background: #1a1a2e; border: 1px solid #3a3a5e;
+    color: #7c6aff; font-family: Arial, sans-serif;
+    font-size: 11px; padding: 8px 12px; border-radius: 6px;
+    cursor: pointer; white-space: nowrap; transition: all 0.15s;
+  }
+  .fal-save-btn:active { background: #7c6aff; color: #fff; }
+  .fal-gen-row { display: flex; gap: 6px; margin-bottom: 10px; }
+  .fal-btn-preview {
+    flex: 2; padding: 11px; border-radius: 8px; border: none;
+    background: linear-gradient(135deg, #7c6aff, #b8a9ff);
+    color: #fff; font-family: Arial, sans-serif; font-weight: 700;
+    font-size: 13px; cursor: pointer; transition: all 0.15s;
+    letter-spacing: 0.05em;
+  }
+  .fal-btn-preview:disabled {
+    background: #2a2a3e; color: #6b6890; cursor: not-allowed;
+  }
+  .fal-btn-hd {
+    flex: 1; padding: 11px; border-radius: 8px;
+    border: 1px solid #4fffb0; background: transparent;
+    color: #4fffb0; font-family: Arial, sans-serif; font-weight: 700;
+    font-size: 12px; cursor: pointer; transition: all 0.15s;
+    letter-spacing: 0.05em;
+  }
+  .fal-btn-hd:disabled {
+    border-color: #2a2a3e; color: #6b6890; cursor: not-allowed;
+  }
+  .fal-status {
+    font-size: 11px; color: #6b6890; min-height: 16px;
+    margin-bottom: 8px; display: flex; align-items: center; gap: 6px;
+  }
+  .fal-spinner {
+    width: 10px; height: 10px; border: 2px solid #3a3a5e;
+    border-top-color: #7c6aff; border-radius: 50%;
+    animation: spin 0.7s linear infinite; display: none;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .fal-preview-wrap {
+    width: 100%; background: #0d0d18; border-radius: 8px;
+    overflow: hidden; position: relative; min-height: 64px;
+    display: none; border: 1px solid #2a2a3e;
+  }
+  .fal-preview-wrap.visible { display: block; }
+  .fal-preview-img {
+    width: 100%; display: block; border-radius: 7px;
+  }
+  .fal-img-meta {
+    padding: 6px 8px; font-size: 10px; color: #6b6890;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .fal-dl-btn {
+    font-size: 10px; color: #7c6aff; background: none; border: none;
+    cursor: pointer; padding: 0; text-decoration: underline;
+    font-family: Arial, sans-serif;
+  }
+  .fal-cost-chip {
+    display: inline-block; background: #0f1a0f;
+    border: 1px solid #1a3a1a; color: #4fffb0;
+    font-size: 9px; padding: 2px 6px; border-radius: 10px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">BIM <span style="font-size:11px;color:var(--muted);font-weight:400;margin-left:6px">v4-2 · Notion + fal.ai</span></div>
+  <div class="progress-wrap">
+    <span id="progText">0 / 10</span>
+    <div class="progress-bar"><div class="progress-fill" id="progFill" style="width:0%"></div></div>
+  </div>
+</header>
+
+
+<div style="padding:14px 14px 120px;">
+  <!-- 슬롯 영역 -->
+  <div id="backArea"></div>
+  <div id="qBlock" style="display: block;"><div class="q-block"><div class="q-step">STEP 1 / 10</div><div class="q-title">디자인 용도</div><div class="q-desc">이 배너는 어떤 용도로 사용되나요?</div><div class="options-list"><div class="opt " onclick="pick(&#39;PURPOSE&#39;,&#39;PUR_001&#39;)"><div class="opt-id">PUR_001</div><div class="opt-name">공공</div><div class="opt-desc">공공기관, 안내, 정보 전달용</div><div class="opt-check">✓</div></div><div class="opt " onclick="pick(&#39;PURPOSE&#39;,&#39;PUR_002&#39;)"><div class="opt-id">PUR_002</div><div class="opt-name">이벤트</div><div class="opt-desc">행사, 프로모션, 축제용</div><div class="opt-check">✓</div></div><div class="opt " onclick="pick(&#39;PURPOSE&#39;,&#39;PUR_003&#39;)"><div class="opt-id">PUR_003</div><div class="opt-name">세미나</div><div class="opt-desc">강연, 컨퍼런스, 교육용</div><div class="opt-check">✓</div></div><div class="opt " onclick="pick(&#39;PURPOSE&#39;,&#39;PUR_004&#39;)"><div class="opt-id">PUR_004</div><div class="opt-name">안전</div><div class="opt-desc">안전 캠페인, 경고, 주의 안내</div><div class="opt-check">✓</div></div></div></div></div>
+  <div class="done-screen" id="doneScreen" style="display: none;">
+    <div class="done-icon">✦</div>
+    <div class="done-title">레시피 완성!</div>
+    <div class="done-sub">아래에서 프롬프트를 확인하고 복사하세요.</div>
+  </div>
+
+  <!-- 구분선 -->
+  <div id="outputDivider" style="display:none;margin:24px 0 16px;border-top:1px solid #2a2a3e;padding-top:16px;">
+    <div style="font-size:10px;letter-spacing:0.18em;color:#6b6890;text-transform:uppercase;margin-bottom:10px;">Recipe</div>
+    <div style="background:#12121a;border:1px solid #2a2a3e;border-radius:10px;padding:12px;margin-bottom:12px;">
+      <div id="recipeName" style="font-family:Arial, sans-serif;font-size:11px;font-weight:700;color:#b8a9ff;margin-bottom:10px;word-break:break-all;">—</div>
+      <div id="tagArea" style="display:flex;flex-wrap:wrap;gap:5px;"><span style="color:#6b6890;font-size:11px">슬롯을 선택하면 표시됩니다</span></div>
+    </div>
+    <div style="font-size:10px;letter-spacing:0.18em;color:#6b6890;text-transform:uppercase;margin-bottom:8px;">Prompt Output</div>
+    <div style="background:#12121a;border:1px solid #2a2a3e;border-radius:10px;padding:12px;margin-bottom:10px;">
+      <div id="promptOutput"><span style="color:#6b6890;font-size:12px;font-style:italic">슬롯 선택 시 실시간으로 쌓입니다.</span></div>
+    </div>
+    <button class="copy-btn" id="copyBtn" onclick="copyPrompt()">[ COPY PROMPT ]</button>
+
+    <!-- fal.ai 이미지 생성 섹션 -->
+    <div class="fal-section" id="falSection" style="display:none;margin-top:14px;">
+      <div class="fal-header">
+        <span class="fal-label">⚡ Image Generate · fal.ai</span>
+        <span class="fal-badge">FLUX Schnell</span>
+      </div>
+      <div class="fal-body">
+        <!-- API Key 입력 -->
+        <div class="fal-key-row">
+          <input class="fal-key-input" id="falKey" type="password" placeholder="fal.ai API Key (fal_…)" autocomplete="off">
+          <button class="fal-save-btn" onclick="saveKey()">저장</button>
+        </div>
+        <!-- 생성 버튼 -->
+        <div class="fal-gen-row">
+          <button class="fal-btn-preview" id="btnPreview" onclick="generateFal(&#39;preview&#39;)" disabled="">
+            ⚡ 미리보기 256px
+          </button>
+          <button class="fal-btn-hd" id="btnHD" onclick="generateFal(&#39;hd&#39;)" disabled="">
+            ✦ HD 1024px (Dev)
+          </button>
+        </div>
+        <!-- 상태 -->
+        <div class="fal-status" id="falStatus">
+          <div class="fal-spinner" id="falSpinner"></div>
+          <span id="falStatusText">API Key를 입력하면 생성 버튼이 활성화됩니다.</span>
+        </div>
+        <!-- 이미지 미리보기 -->
+        <div class="fal-preview-wrap" id="falPreviewWrap">
+          <img class="fal-preview-img" id="falPreviewImg" src="file:///C:/Users/j/Downloads/bim_v4-2_5.html" alt="generated">
+          <div class="fal-img-meta">
+            <span id="falImgInfo">—</span>
+            <button class="fal-dl-btn" id="falDlBtn" onclick="downloadImg()">다운로드</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 노션 저장 섹션 -->
+    <div class="fal-section" id="notionSection" style="display:none;margin-top:14px;">
+      <div class="fal-header">
+        <span class="fal-label">📋 Notion 저장</span>
+        <span class="fal-badge">자동 기록</span>
+      </div>
+      <div class="fal-body">
+        <!-- API 설정 -->
+        <div class="fal-key-row">
+          <input class="fal-key-input" id="notionToken" type="password" placeholder="통합 시크릿 (ntn_ 또는 secret_…)" autocomplete="off">
+          <button class="fal-save-btn" onclick="saveNotionKey()">저장</button>
+        </div>
+        <div class="fal-key-row" style="margin-top:-4px;">
+          <input class="fal-key-input" id="notionDbId" type="text" placeholder="DB ID (32자리)" autocomplete="off" value="34a63bba556b8056aba3c8872b35f4ba">
+        </div>
+        <!-- 저장 버튼 -->
+        <div class="fal-gen-row">
+          <button class="fal-btn-preview" id="btnNotionSave" onclick="saveToNotion()" disabled="">
+            📋 노션에 레시피 저장
+          </button>
+        </div>
+        <!-- 상태 -->
+        <div class="fal-status" id="notionStatus">
+          <div class="fal-spinner" id="notionSpinner"></div>
+          <span id="notionStatusText">통합 시크릿을 입력하면 저장 버튼이 활성화됩니다.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 하단 고정 버튼 -->
+<div id="bottomNav" style="position:fixed;bottom:0;left:0;right:0;display:flex;gap:8px;padding:10px 14px 24px;background:linear-gradient(transparent,#0a0a0f 35%);z-index:999;">
+  <button id="btnBack" onclick="goBack()" style="flex: 1 1 0%; background: rgb(26, 26, 38); border: 1px solid rgb(42, 42, 62); color: rgb(184, 169, 255); font-family: Arial, sans-serif; font-size: 14px; padding: 12px; border-radius: 8px; cursor: pointer; opacity: 0.3; pointer-events: none;">← 이전</button>
+  <button onclick="resetAll()" style="flex:1;background:#1a1a26;border:1px solid #2a2a3e;color:#b8a9ff;font-family:Arial,sans-serif;font-size:14px;padding:12px;border-radius:8px;cursor:pointer;">↺ 처음으로</button>
+</div>
+
+<script>
+// ===== DATA =====
+const BASE_COLORS = [
+  {id:'BASE_01',name:'Cobalt Blue', hex:'#1a6fff',prompt:'vivid cobalt blue'},
+  {id:'BASE_02',name:'Sky Blue',    hex:'#4fc3f7',prompt:'soft sky blue'},
+  {id:'BASE_03',name:'Teal',        hex:'#00bfa5',prompt:'vivid teal green'},
+  {id:'BASE_04',name:'Emerald',     hex:'#00c853',prompt:'deep emerald green'},
+  {id:'BASE_05',name:'Violet',      hex:'#7c3aed',prompt:'deep violet purple'},
+  {id:'BASE_06',name:'Rose Pink',   hex:'#f06292',prompt:'vivid rose pink'},
+  {id:'BASE_07',name:'Coral',       hex:'#ff6b6b',prompt:'warm coral red'},
+  {id:'BASE_08',name:'Amber',       hex:'#ffb300',prompt:'deep amber orange'},
+  {id:'BASE_09',name:'Gold',        hex:'#ffd700',prompt:'bright golden yellow'},
+  {id:'BASE_10',name:'Charcoal',    hex:'#4a4a5a',prompt:'deep dark charcoal'},
+  {id:'BASE_11',name:'Pure White',  hex:'#e8e8f0',prompt:'clean crisp white'},
+  {id:'BASE_12',name:'Deep Navy',   hex:'#0a1628',prompt:'deep midnight navy'},
+  {id:'BASE_13',name:'Cyan',        hex:'#00ffff',prompt:'pure cyan'},
+  {id:'BASE_14',name:'Magenta',     hex:'#ff00ff',prompt:'pure magenta'},
+  {id:'BASE_15',name:'Yellow',      hex:'#ffff00',prompt:'pure yellow'},
+  {id:'BASE_16',name:'Red',         hex:'#ff0000',prompt:'pure red'},
+  {id:'BASE_17',name:'Green',       hex:'#00cc00',prompt:'pure green'},
+  {id:'BASE_18',name:'Blue',        hex:'#0000ff',prompt:'pure blue'},
+  {id:'BASE_19',name:'White',       hex:'#ffffff',prompt:'pure white'},
+];
+
+const HEX = {
+  'Cobalt Blue':'#1a6fff','Sky Blue':'#4fc3f7','Teal':'#00bfa5','Emerald':'#00c853',
+  'Violet':'#7c3aed','Rose Pink':'#f06292','Coral':'#ff6b6b','Amber':'#ffb300',
+  'Gold':'#ffd700','Charcoal':'#4a4a5a','Pure White':'#e8e8f0','Deep Navy':'#0a1628',
+  'Cyan':'#00ffff','Magenta':'#ff00ff','Yellow':'#ffff00',
+  'Red':'#ff0000','Green':'#00cc00','Blue':'#0000ff','White':'#ffffff',
+};
+const hx = name => HEX[name] || '#888';
+
+const TONES = [
+  {id:'TONE_001',name:'Vivid',   desc:'고채도, 선명하고 강렬한',   bar:'linear-gradient(90deg,#ff3b3b,#ffb300,#00c853,#1a6fff)',   prompt:'highly saturated vivid colors'},
+  {id:'TONE_002',name:'Pastel',  desc:'저채도, 부드럽고 밝은',     bar:'linear-gradient(90deg,#ffb3c1,#b3d9ff,#b3f0e0,#ffe0b3)',   prompt:'soft pastel desaturated colors'},
+  {id:'TONE_003',name:'Neon',    desc:'형광, 발광하듯 초강렬한',   bar:'linear-gradient(90deg,#ff00ff,#00ffff,#39ff14,#ff6600)',   prompt:'neon electric glowing colors'},
+  {id:'TONE_004',name:'Muted',   desc:'탁하고 절제된 차분한',      bar:'linear-gradient(90deg,#8a7a6a,#6a7a8a,#6a8a7a,#8a8a6a)', prompt:'muted dusty understated colors'},
+  {id:'TONE_005',name:'Dark',    desc:'어둡고 무게감 있는',        bar:'linear-gradient(90deg,#0d0d1a,#1a0d2a,#0d1a0d,#1a1a0d)', prompt:'dark moody dramatic tones'},
+  {id:'TONE_006',name:'Metallic',desc:'금속 광택, 반사감 있는',    bar:'linear-gradient(90deg,#c0c0c0,#ffd700,#b87333,#e8e8e8)', prompt:'metallic shiny reflective tones'},
+];
+
+const COMBOS = {
+  ANALOG:{
+    '2':[
+      {id:'A2_001',name:'Sky Fade',     colors:['Cobalt Blue','Sky Blue'],              ko:'파랑→하늘 자연스럽게',       prompt:'cobalt blue fading into sky blue'},
+      {id:'A2_002',name:'Ocean Depth',  colors:['Deep Navy','Cobalt Blue'],             ko:'깊은 바다→파란 수면',         prompt:'deep navy into cobalt blue'},
+      {id:'A2_003',name:'Forest Flow',  colors:['Emerald','Teal'],                      ko:'에메랄드→청록 자연',          prompt:'emerald flowing into teal'},
+      {id:'A2_004',name:'Flame Edge',   colors:['Coral','Amber'],                       ko:'코랄→앰버 따뜻한 흐름',       prompt:'coral burning into amber'},
+      {id:'A2_005',name:'Dusk Bloom',   colors:['Violet','Rose Pink'],                  ko:'보라→핑크 몽환적',            prompt:'violet blooming into rose pink'},
+      {id:'A2_006',name:'Golden Mist',  colors:['Amber','Gold'],                        ko:'앰버→황금빛',                 prompt:'amber glowing into gold'},
+    ],
+    '3':[
+      {id:'A3_001',name:'Blue Horizon', colors:['Deep Navy','Cobalt Blue','Sky Blue'],  ko:'네이비→파랑→하늘 깊이감',    prompt:'deep navy to cobalt blue to sky blue'},
+      {id:'A3_002',name:'Ocean Mint',   colors:['Sky Blue','Teal','Emerald'],           ko:'하늘→청록→에메 청량함',      prompt:'sky blue to teal to emerald'},
+      {id:'A3_003',name:'Sunset Flame', colors:['Coral','Amber','Gold'],               ko:'코랄→앰버→골드 석양',        prompt:'coral to amber to gold sunset'},
+      {id:'A3_004',name:'Purple Dusk',  colors:['Violet','Rose Pink','Coral'],         ko:'보라→핑크→코랄 노을',        prompt:'violet to rose pink to coral'},
+      {id:'A3_005',name:'Forest Glow',  colors:['Emerald','Teal','Sky Blue'],          ko:'숲→바다 자연스럽게',         prompt:'emerald to teal to sky blue'},
+      {id:'A3_006',name:'Golden Hour',  colors:['Amber','Gold','Pure White'],          ko:'황금빛→흰빛 페이드',         prompt:'amber to gold fading to white'},
+    ],
+    '4':[
+      {id:'A4_001',name:'Deep Ocean',   colors:['Deep Navy','Cobalt Blue','Teal','Pure White'],   ko:'바다 깊이→수면→빛',      prompt:'deep navy cobalt teal to white'},
+      {id:'A4_002',name:'Aurora Flow',  colors:['Violet','Cobalt Blue','Teal','Sky Blue'],        ko:'오로라 보라→파랑→청록',  prompt:'violet cobalt teal sky aurora'},
+      {id:'A4_003',name:'Fire Cascade', colors:['Deep Navy','Violet','Rose Pink','Coral'],        ko:'밤→불꽃 드라마틱',       prompt:'navy violet rose coral cascade'},
+      {id:'A4_004',name:'Golden Flame', colors:['Charcoal','Coral','Amber','Gold'],              ko:'어둠→황금 불꽃',         prompt:'charcoal coral amber gold flame'},
+      {id:'A4_005',name:'Forest Depth', colors:['Deep Navy','Emerald','Teal','Sky Blue'],        ko:'깊은 숲→청록→하늘',     prompt:'navy emerald teal sky depth'},
+      {id:'A4_006',name:'Bloom Trail',  colors:['Rose Pink','Coral','Amber','Gold'],             ko:'꽃→황금빛 따뜻하게',     prompt:'rose coral amber gold trail'},
+    ],
+  },
+  CONTRAST:{
+    '2':[
+      {id:'C2_001',name:'Violet Gold',  colors:['Violet','Gold'],          ko:'보라↔금 고급 대비',            prompt:'violet and gold high contrast'},
+      {id:'C2_002',name:'Navy Coral',   colors:['Deep Navy','Coral'],      ko:'차가운 네이비↔따뜻한 코랄',    prompt:'deep navy and coral bold contrast'},
+      {id:'C2_003',name:'Teal Amber',   colors:['Teal','Amber'],           ko:'청록↔앰버 보색 대비',          prompt:'teal and amber complementary'},
+      {id:'C2_004',name:'Cobalt Coral', colors:['Cobalt Blue','Coral'],    ko:'시원함↔따뜻함 충돌',           prompt:'cobalt blue and coral vivid contrast'},
+      {id:'C2_005',name:'Emerald Rose', colors:['Emerald','Rose Pink'],    ko:'자연↔감성 신선한 대비',        prompt:'emerald and rose pink fresh contrast'},
+      {id:'C2_006',name:'Navy Gold',    colors:['Deep Navy','Gold'],       ko:'클래식 고급 대비 품격',        prompt:'deep navy and gold classic contrast'},
+    ],
+    '3':[
+      {id:'C3_001',name:'Night Fire',   colors:['Deep Navy','Cobalt Blue','Coral'],   ko:'차가운 바다↔뜨거운 불꽃',    prompt:'navy cobalt base with coral contrast'},
+      {id:'C3_002',name:'Violet Amber', colors:['Violet','Rose Pink','Amber'],        ko:'신비로운 보라↔따뜻한 앰버',  prompt:'violet rose against warm amber'},
+      {id:'C3_003',name:'Teal Flame',   colors:['Teal','Emerald','Coral'],            ko:'청록 쿨↔코랄 웜 대비',       prompt:'cool teal emerald versus warm coral'},
+      {id:'C3_004',name:'Navy Bloom',   colors:['Deep Navy','Teal','Gold'],           ko:'어두운 배경↔황금 포인트',    prompt:'dark navy teal with gold accent'},
+      {id:'C3_005',name:'Sky Rose',     colors:['Sky Blue','Cobalt Blue','Rose Pink'],ko:'하늘빛↔핑크 상쾌한 대비',   prompt:'sky cobalt blue with rose pink pop'},
+      {id:'C3_006',name:'Dark Gold',    colors:['Charcoal','Deep Navy','Gold'],       ko:'다크 배경↔골드 강조',        prompt:'charcoal navy with gold highlight'},
+    ],
+    '4':[
+      {id:'C4_001',name:'Cosmic Drama', colors:['Deep Navy','Violet','Gold','Coral'],       ko:'우주적 드라마 4색 대비',   prompt:'navy violet versus gold coral drama'},
+      {id:'C4_002',name:'Ocean Flame',  colors:['Deep Navy','Cobalt Blue','Coral','Amber'], ko:'바다↔불꽃 극명한 대비',   prompt:'ocean blue versus fire coral amber'},
+      {id:'C4_003',name:'Emerald Dusk', colors:['Emerald','Teal','Rose Pink','Amber'],      ko:'자연↔감성 4색 조화',      prompt:'emerald teal versus rose amber dusk'},
+      {id:'C4_004',name:'Storm Fire',   colors:['Charcoal','Deep Navy','Coral','Gold'],     ko:'폭풍↔불꽃 강렬한 긴장감', prompt:'dark storm versus coral gold fire'},
+      {id:'C4_005',name:'Purple Flame', colors:['Violet','Cobalt Blue','Amber','Coral'],    ko:'신비 보라↔뜨거운 불꽃',   prompt:'violet cobalt versus warm amber coral'},
+      {id:'C4_006',name:'Arctic Bloom', colors:['Sky Blue','Pure White','Rose Pink','Gold'],ko:'차가운 북극↔따뜻한 꽃',  prompt:'arctic sky white versus rose gold bloom'},
+    ],
+  },
+  NEUTRAL:{
+    '2':[
+      {id:'N2_001',name:'White Cobalt',   colors:['Pure White','Cobalt Blue'],  ko:'흰배경+코발트 포인트',      prompt:'pure white base with cobalt blue accent'},
+      {id:'N2_002',name:'White Violet',   colors:['Pure White','Violet'],       ko:'흰배경+보라 포인트',        prompt:'pure white base with violet accent'},
+      {id:'N2_003',name:'White Teal',     colors:['Pure White','Teal'],         ko:'흰배경+청록 포인트',        prompt:'pure white base with teal accent'},
+      {id:'N2_004',name:'Charcoal Gold',  colors:['Charcoal','Gold'],           ko:'다크 배경+골드 럭셔리',     prompt:'charcoal base with gold accent'},
+      {id:'N2_005',name:'Charcoal Cobalt',colors:['Charcoal','Cobalt Blue'],    ko:'다크 배경+코발트 테크',     prompt:'charcoal base with cobalt accent'},
+      {id:'N2_006',name:'Navy White',     colors:['Deep Navy','Pure White'],    ko:'공식적 네이비+화이트',      prompt:'deep navy base with white accent'},
+    ],
+    '3':[
+      {id:'N3_001',name:'White Sky Blue',    colors:['Pure White','Sky Blue','Cobalt Blue'], ko:'흰+하늘+코발트 청량함',   prompt:'white sky blue cobalt clean layout'},
+      {id:'N3_002',name:'White Rose Violet', colors:['Pure White','Rose Pink','Violet'],     ko:'흰+핑크+보라 감성적',     prompt:'white rose pink violet soft palette'},
+      {id:'N3_003',name:'White Teal Navy',   colors:['Pure White','Teal','Deep Navy'],       ko:'흰+청록+네이비 신뢰감',   prompt:'white teal navy trustworthy palette'},
+      {id:'N3_004',name:'Charcoal Gold Sky', colors:['Charcoal','Gold','Sky Blue'],          ko:'다크+골드+하늘 모던 럭셔리',prompt:'charcoal gold sky blue modern luxury'},
+      {id:'N3_005',name:'Navy White Gold',   colors:['Deep Navy','Pure White','Gold'],       ko:'네이비+흰+골드 공식 고급',  prompt:'navy white gold official premium'},
+      {id:'N3_006',name:'Charcoal Teal Gold',colors:['Charcoal','Teal','Gold'],             ko:'다크+청록+골드 테크 럭셔리',prompt:'charcoal teal gold tech luxury'},
+    ],
+    '4':[
+      {id:'N4_001',name:'Clean Blue',    colors:['Pure White','Sky Blue','Cobalt Blue','Deep Navy'],ko:'흰→하늘→코발트→네이비',  prompt:'white sky cobalt navy clean gradient'},
+      {id:'N4_002',name:'Dark Gold',     colors:['Charcoal','Deep Navy','Gold','Pure White'],       ko:'다크 배경+골드+화이트',   prompt:'charcoal navy gold white luxury dark'},
+      {id:'N4_003',name:'Minimal Bloom', colors:['Pure White','Rose Pink','Violet','Deep Navy'],    ko:'미니멀 흰+꽃+보라+네이비', prompt:'white rose violet navy minimal bloom'},
+      {id:'N4_004',name:'Steel Teal',    colors:['Charcoal','Deep Navy','Teal','Pure White'],       ko:'스틸 다크+청록+화이트',   prompt:'charcoal navy teal white steel palette'},
+      {id:'N4_005',name:'Ivory Violet',  colors:['Pure White','Cobalt Blue','Violet','Gold'],       ko:'화이트+코발트+보라+골드',  prompt:'white cobalt violet gold elegant'},
+      {id:'N4_006',name:'Shadow Gold',   colors:['Deep Navy','Charcoal','Amber','Gold'],            ko:'어둠 배경+황금빛 조명',   prompt:'navy charcoal amber gold shadow light'},
+    ],
+  },
+  MIX_SEASONAL:{
+    '2':[
+      {id:'S2_001',name:'Spring Blossom',colors:['Rose Pink','Sky Blue'],     ko:'봄 벚꽃+하늘 생동감',    prompt:'spring blossom rose pink and sky blue'},
+      {id:'S2_002',name:'Summer Surf',   colors:['Cobalt Blue','Coral'],      ko:'여름 바다+일몰 에너지',  prompt:'summer surf cobalt blue and coral'},
+      {id:'S2_003',name:'Autumn Leaf',   colors:['Amber','Coral'],            ko:'가을 단풍 따뜻한 흐름',  prompt:'autumn leaf amber and coral warmth'},
+      {id:'S2_004',name:'Winter Frost',  colors:['Deep Navy','Pure White'],   ko:'겨울 눈밤 청명한 대비',  prompt:'winter frost deep navy and white'},
+      {id:'S2_005',name:'Early Spring',  colors:['Emerald','Rose Pink'],      ko:'새싹+꽃 봄의 시작',      prompt:'early spring emerald and rose pink'},
+      {id:'S2_006',name:'Late Summer',   colors:['Teal','Gold'],              ko:'늦여름 청록+황금빛',     prompt:'late summer teal and gold warmth'},
+    ],
+    '3':[
+      {id:'S3_001',name:'Spring Garden',  colors:['Rose Pink','Sky Blue','Emerald'],      ko:'벚꽃+하늘+새싹 봄 정원',  prompt:'spring garden rose sky blue emerald'},
+      {id:'S3_002',name:'Summer Festival',colors:['Cobalt Blue','Coral','Gold'],          ko:'바다+일몰+황금 여름 축제', prompt:'summer festival cobalt coral gold'},
+      {id:'S3_003',name:'Autumn Forest',  colors:['Amber','Coral','Charcoal'],            ko:'단풍+코랄+어둠 가을 숲',  prompt:'autumn forest amber coral charcoal'},
+      {id:'S3_004',name:'Winter Night',   colors:['Deep Navy','Sky Blue','Pure White'],   ko:'겨울 밤하늘+별빛+눈',     prompt:'winter night navy sky white stars'},
+      {id:'S3_005',name:'Harvest Moon',   colors:['Gold','Amber','Deep Navy'],            ko:'추석 달빛+앰버+밤하늘',   prompt:'harvest moon gold amber deep navy'},
+      {id:'S3_006',name:'Rainy Season',   colors:['Sky Blue','Teal','Charcoal'],          ko:'장마 청량함+먹구름',      prompt:'rainy season sky teal charcoal mood'},
+    ],
+    '4':[
+      {id:'S4_001',name:'Full Spring',   colors:['Rose Pink','Sky Blue','Emerald','Pure White'],   ko:'만개한 봄 4색',       prompt:'full spring rose sky emerald white bloom'},
+      {id:'S4_002',name:'Peak Summer',   colors:['Cobalt Blue','Teal','Coral','Gold'],             ko:'한여름 절정 4색',     prompt:'peak summer cobalt teal coral gold'},
+      {id:'S4_003',name:'Deep Autumn',   colors:['Amber','Coral','Charcoal','Gold'],              ko:'깊은 가을 4색',       prompt:'deep autumn amber coral charcoal gold'},
+      {id:'S4_004',name:'Silent Winter', colors:['Deep Navy','Sky Blue','Pure White','Violet'],    ko:'고요한 겨울 4색',     prompt:'silent winter navy sky white violet'},
+      {id:'S4_005',name:'Spring Rain',   colors:['Teal','Sky Blue','Rose Pink','Pure White'],      ko:'봄비 청량+핑크+화이트',prompt:'spring rain teal sky rose white'},
+      {id:'S4_006',name:'Golden Autumn', colors:['Gold','Amber','Emerald','Charcoal'],             ko:'황금 가을 4색 조화',  prompt:'golden autumn gold amber emerald charcoal'},
+    ],
+  },
+  MIX_CULTURAL:{
+    '2':[
+      {id:'B2_001',name:'Korean Celadon',colors:['Teal','Pure White'],       ko:'청자 도자기 청록+백',    prompt:'Korean celadon teal and white'},
+      {id:'B2_002',name:'Korean Royal',  colors:['Deep Navy','Gold'],         ko:'궁중 네이비+금장식',     prompt:'Korean royal navy and gold'},
+      {id:'B2_003',name:'Japan Sakura',  colors:['Rose Pink','Pure White'],   ko:'벚꽃 핑크+흰 일본',     prompt:'Japanese sakura rose pink and white'},
+      {id:'B2_004',name:'Japan Ink',     colors:['Charcoal','Pure White'],    ko:'수묵화 먹+백 절제미',    prompt:'Japanese ink charcoal and white'},
+      {id:'B2_005',name:'Euro Royal',    colors:['Violet','Gold'],            ko:'유럽 왕실 보라+황금',    prompt:'European royal violet and gold'},
+      {id:'B2_006',name:'Tropical Bali', colors:['Emerald','Amber'],          ko:'발리 에메랄드+앰버',     prompt:'tropical Bali emerald and amber'},
+    ],
+    '3':[
+      {id:'B3_001',name:'Korean Dancheong',colors:['Cobalt Blue','Coral','Gold'],      ko:'단청 파랑+붉+금 전통미',  prompt:'Korean dancheong cobalt coral gold'},
+      {id:'B3_002',name:'Moroccan Spice',  colors:['Amber','Coral','Teal'],            ko:'모로코 시장 따뜻+청록',   prompt:'Moroccan spice amber coral teal'},
+      {id:'B3_003',name:'Nordic Minimal',  colors:['Sky Blue','Pure White','Charcoal'],ko:'북유럽 하늘+흰+차콜',     prompt:'Nordic minimal sky white charcoal'},
+      {id:'B3_004',name:'Indian Festival', colors:['Violet','Coral','Gold'],           ko:'인도 축제 보라+코랄+금',  prompt:'Indian festival violet coral gold'},
+      {id:'B3_005',name:'Japan Matcha',    colors:['Emerald','Charcoal','Pure White'], ko:'말차 에메+먹+백',         prompt:'Japanese matcha emerald charcoal white'},
+      {id:'B3_006',name:'Arabian Night',   colors:['Deep Navy','Violet','Gold'],       ko:'아라비안 나이트 3색',     prompt:'Arabian night navy violet gold'},
+    ],
+    '4':[
+      {id:'B4_001',name:'Korean Palace',  colors:['Deep Navy','Cobalt Blue','Gold','Pure White'],  ko:'경복궁 4색 웅장함',      prompt:'Korean palace navy cobalt gold white'},
+      {id:'B4_002',name:'Joseon Sunset',  colors:['Amber','Coral','Deep Navy','Gold'],             ko:'조선 일몰 4색 장엄함',    prompt:'Joseon sunset amber coral navy gold'},
+      {id:'B4_003',name:'Japan Zen',      colors:['Charcoal','Teal','Pure White','Gold'],          ko:'선(禅) 먹+청록+백+금',   prompt:'Japan Zen charcoal teal white gold'},
+      {id:'B4_004',name:'Tropical Island',colors:['Teal','Emerald','Coral','Gold'],               ko:'열대 섬 4색 생동감',      prompt:'tropical island teal emerald coral gold'},
+      {id:'B4_005',name:'Euro Garden',    colors:['Violet','Rose Pink','Emerald','Pure White'],    ko:'유럽 정원 보라+핑크+그린+흰',prompt:'European garden violet rose emerald white'},
+      {id:'B4_006',name:'Arabian Night4', colors:['Deep Navy','Violet','Gold','Amber'],            ko:'아라비안 나이트 4색',     prompt:'Arabian night navy violet gold amber'},
+    ],
+  },
+  MIX_EMOTION:{
+    '2':[
+      {id:'E2_001',name:'Calm',    colors:['Sky Blue','Pure White'],   ko:'고요함 하늘+흰 평온',     prompt:'calm serenity sky blue and white'},
+      {id:'E2_002',name:'Passion', colors:['Coral','Deep Navy'],       ko:'열정 코랄+네이비 대비',   prompt:'passion coral and deep navy energy'},
+      {id:'E2_003',name:'Mystery', colors:['Violet','Charcoal'],       ko:'신비 보라+차콜 어둠',     prompt:'mystery violet and charcoal depth'},
+      {id:'E2_004',name:'Joy',     colors:['Rose Pink','Gold'],        ko:'기쁨 핑크+골드 밝음',     prompt:'joy rose pink and gold brightness'},
+      {id:'E2_005',name:'Trust',   colors:['Cobalt Blue','Charcoal'],  ko:'신뢰 코발트+차콜 안정',   prompt:'trust cobalt blue and charcoal stability'},
+      {id:'E2_006',name:'Hope',    colors:['Emerald','Sky Blue'],      ko:'희망 에메랄드+하늘 청량', prompt:'hope emerald and sky blue freshness'},
+    ],
+    '3':[
+      {id:'E3_001',name:'Serenity',   colors:['Sky Blue','Teal','Pure White'],         ko:'평온 하늘+청록+흰',        prompt:'serenity sky blue teal white calm'},
+      {id:'E3_002',name:'Energy',     colors:['Coral','Amber','Cobalt Blue'],          ko:'에너지 코랄+앰버+코발트',  prompt:'energy coral amber cobalt dynamic'},
+      {id:'E3_003',name:'Romance',    colors:['Rose Pink','Violet','Pure White'],      ko:'로맨스 핑크+보라+흰',      prompt:'romance rose pink violet white dreamy'},
+      {id:'E3_004',name:'Confidence', colors:['Deep Navy','Cobalt Blue','Gold'],       ko:'자신감 네이비+코발트+금',  prompt:'confidence navy cobalt gold bold'},
+      {id:'E3_005',name:'Nostalgia',  colors:['Amber','Rose Pink','Charcoal'],         ko:'향수 앰버+핑크+차콜',      prompt:'nostalgia amber rose charcoal memory'},
+      {id:'E3_006',name:'Freedom',    colors:['Sky Blue','Emerald','Pure White'],      ko:'자유 하늘+에메+흰 개방감', prompt:'freedom sky emerald white open space'},
+    ],
+    '4':[
+      {id:'E4_001',name:'Pure Joy',     colors:['Rose Pink','Sky Blue','Gold','Pure White'],   ko:'순수한 기쁨 밝고 화사한',  prompt:'pure joy rose sky gold white brightness'},
+      {id:'E4_002',name:'Deep Passion', colors:['Deep Navy','Violet','Coral','Gold'],          ko:'깊은 열정 드라마틱',       prompt:'deep passion navy violet coral gold'},
+      {id:'E4_003',name:'Warm Memory',  colors:['Amber','Coral','Rose Pink','Pure White'],     ko:'따뜻한 기억 황금+코랄+핑크',prompt:'warm memory amber coral rose white'},
+      {id:'E4_004',name:'Cool Ambition',colors:['Charcoal','Cobalt Blue','Teal','Pure White'], ko:'차가운 야망 다크+코발트',  prompt:'cool ambition charcoal cobalt teal white'},
+      {id:'E4_005',name:'Quiet Power',  colors:['Deep Navy','Charcoal','Gold','Pure White'],   ko:'조용한 힘 어둠속 골드빛',  prompt:'quiet power navy charcoal gold white'},
+      {id:'E4_006',name:'Bright Future',colors:['Sky Blue','Emerald','Gold','Pure White'],     ko:'밝은 미래 하늘+에메+금+흰',prompt:'bright future sky emerald gold white'},
+    ],
+  },
+  MIX_NATURE:{
+    '2':[
+      {id:'NA2_001',name:'Ocean',   colors:['Cobalt Blue','Sky Blue'],  ko:'바다 코발트+하늘',   prompt:'ocean cobalt blue and sky blue depth'},
+      {id:'NA2_002',name:'Forest',  colors:['Emerald','Teal'],          ko:'숲 에메랄드+청록',   prompt:'forest emerald and teal nature'},
+      {id:'NA2_003',name:'Desert',  colors:['Amber','Gold'],            ko:'사막 앰버+골드',     prompt:'desert amber and gold warmth'},
+      {id:'NA2_004',name:'Volcano', colors:['Coral','Charcoal'],        ko:'화산 코랄+차콜',     prompt:'volcano coral and charcoal intensity'},
+      {id:'NA2_005',name:'Aurora',  colors:['Violet','Teal'],           ko:'오로라 보라+청록',   prompt:'aurora violet and teal mystery'},
+      {id:'NA2_006',name:'Glacier', colors:['Sky Blue','Pure White'],   ko:'빙하 하늘+흰 순수함',prompt:'glacier sky blue and white purity'},
+    ],
+    '3':[
+      {id:'NA3_001',name:'Deep Ocean',     colors:['Deep Navy','Cobalt Blue','Teal'],   ko:'깊은 바다 3색 웅장함',   prompt:'deep ocean navy cobalt teal layers'},
+      {id:'NA3_002',name:'Tropical Forest',colors:['Emerald','Teal','Gold'],            ko:'열대 숲 에메+청록+황금', prompt:'tropical forest emerald teal gold'},
+      {id:'NA3_003',name:'Desert Sunset',  colors:['Amber','Coral','Deep Navy'],        ko:'사막 일몰 앰버+코랄+밤', prompt:'desert sunset amber coral navy sky'},
+      {id:'NA3_004',name:'Mountain Snow',  colors:['Deep Navy','Sky Blue','Pure White'],ko:'설산 네이비+하늘+눈',    prompt:'mountain snow navy sky blue white'},
+      {id:'NA3_005',name:'Northern Sky',   colors:['Violet','Teal','Sky Blue'],         ko:'북극 하늘 보라+청록+하늘',prompt:'northern sky violet teal sky blue'},
+      {id:'NA3_006',name:'Lava Flow',      colors:['Charcoal','Coral','Amber'],         ko:'용암 차콜+코랄+앰버',    prompt:'lava flow charcoal coral amber heat'},
+    ],
+    '4':[
+      {id:'NA4_001',name:'Pacific Ocean',  colors:['Deep Navy','Cobalt Blue','Teal','Pure White'],  ko:'태평양 깊이+넓이 4색',  prompt:'pacific ocean navy cobalt teal white'},
+      {id:'NA4_002',name:'Amazon',         colors:['Emerald','Teal','Gold','Coral'],               ko:'아마존 열대우림 4색',    prompt:'amazon emerald teal gold coral wild'},
+      {id:'NA4_003',name:'Sahara Dusk',    colors:['Charcoal','Amber','Coral','Gold'],             ko:'사하라 황혼 4색 장엄함', prompt:'sahara dusk charcoal amber coral gold'},
+      {id:'NA4_004',name:'Arctic Night',   colors:['Deep Navy','Violet','Sky Blue','Pure White'],  ko:'북극의 밤 4색 신비',     prompt:'arctic night navy violet sky white'},
+      {id:'NA4_005',name:'Rainforest',     colors:['Emerald','Teal','Cobalt Blue','Charcoal'],     ko:'열대우림 4색 밀도감',    prompt:'rainforest emerald teal cobalt charcoal'},
+      {id:'NA4_006',name:'Volcanic Island',colors:['Charcoal','Coral','Teal','Gold'],             ko:'화산섬 4색 역동적',      prompt:'volcanic island charcoal coral teal gold'},
+    ],
+  },
+};
+
+// ===== SLOT COLOR MAP =====
+const SLOT_COLORS = {
+  PURPOSE:{bg:'#1a1030',border:'#7c3aed',key:'#a78bfa',val:'#ddd6fe'},
+  COMP:{bg:'#0f1f30',border:'#0ea5e9',key:'#38bdf8',val:'#bae6fd'},
+  FLOW:{bg:'#0f2420',border:'#10b981',key:'#34d399',val:'#a7f3d0'},
+  SHAPE:{bg:'#1f1a0f',border:'#f59e0b',key:'#fbbf24',val:'#fde68a'},
+  SURF:{bg:'#1a1020',border:'#ec4899',key:'#f472b6',val:'#fbcfe8'},
+  MOOD:{bg:'#0f1a20',border:'#06b6d4',key:'#22d3ee',val:'#a5f3fc'},
+  MATERIAL:{bg:'#1a1515',border:'#ef4444',key:'#f87171',val:'#fecaca'},
+  LIGHTING:{bg:'#1a1a0f',border:'#84cc16',key:'#a3e635',val:'#d9f99d'},
+  COLOR:{bg:'#1a1530',border:'#c084fc',key:'#e879f9',val:'#f5d0fe'},
+  AR:{bg:'#0f1a15',border:'#34d399',key:'#6ee7b7',val:'#d1fae5'},
+};
+
+const KO_PROMPTS = {
+  PUR_001:'공공기관 신뢰감',PUR_002:'이벤트 프로모션',PUR_003:'세미나 전문적',PUR_004:'안전 캠페인',
+  COMP_001:'중앙 여백 프레임',COMP_002:'좌측 텍스트 공간',COMP_003:'우측 텍스트 공간',COMP_004:'상단 여백 하단 흐름',
+  COMP_005:'하단 기원 상승',COMP_006:'중앙 좁고 상하 여백',COMP_007:'양쪽 엣지 확장',
+  FLOW_001:'부드러운 웨이브',FLOW_002:'대각선 강한 흐름',FLOW_003:'곡선 아크 흐름',FLOW_004:'가장자리 감싸는 흐름',FLOW_005:'비틀린 흐름',
+  SHAPE_001:'리본',SHAPE_002:'시트',SHAPE_003:'얇은 막',SHAPE_004:'웨이브 밴드',SHAPE_005:'종이 접힘',SHAPE_006:'유기적 유체',
+  SURF_001:'플랫 벡터',SURF_002:'그라디언트',SURF_003:'반투명 겹침',SURF_004:'패턴 오버레이',
+  MOOD_001:'공식적 신뢰감',MOOD_002:'미니멀 모던',MOOD_003:'하이컨트라스트',MOOD_004:'차분 프로페셔널',
+  MAT_001:'플랫',MAT_002:'실크 그라디언트',MAT_003:'액체 유리',MAT_004:'무광 페이퍼컷',MAT_005:'소프트 3D',
+  LIGHT_001:'조명 없음',LIGHT_002:'소프트 섀도',LIGHT_003:'이너 섀도',LIGHT_004:'글로우',LIGHT_005:'하이라이트',
+};
+
+
+
+// ===== STATE =====
+let selections = {};
+let multiColors = [];
+
+// ===== STEPS =====
+function getSteps() {
+  const base = [
+    {key:'PURPOSE',slot:'PURPOSE',title:'디자인 용도',desc:'이 배너는 어떤 용도로 사용되나요?',type:'normal',options:[
+      {id:'PUR_001',name:'공공',    prompt:'public official tone',    desc:'공공기관, 안내, 정보 전달용'},
+      {id:'PUR_002',name:'이벤트', prompt:'event promotional tone',  desc:'행사, 프로모션, 축제용'},
+      {id:'PUR_003',name:'세미나', prompt:'seminar professional tone',desc:'강연, 컨퍼런스, 교육용'},
+      {id:'PUR_004',name:'안전',   prompt:'safety awareness tone',   desc:'안전 캠페인, 경고, 주의 안내'},
+    ]},
+    {key:'COMP',slot:'COMP',title:'구도 (COMP)',desc:'배너의 전체 레이아웃 구조를 선택하세요.',type:'normal',options:[
+      {id:'COMP_001',name:'Center Frame',          prompt:'central white space with surrounding curved framing',        desc:'중앙 여백 + 외곽 곡선 프레임'},
+      {id:'COMP_002',name:'Left Open',             prompt:'open left space with right-side graphic',                   desc:'좌측 텍스트 공간 + 우측 그래픽'},
+      {id:'COMP_003',name:'Right Open',            prompt:'open right space with left-side graphic',                   desc:'우측 텍스트 공간 + 좌측 그래픽'},
+      {id:'COMP_004',name:'Top Open Bottom Flow',  prompt:'open top space with bottom flow',                           desc:'상단 여백 + 하단에서 올라오는 흐름'},
+      {id:'COMP_005',name:'Bottom Lift Frame',     prompt:'bottom-origin structure lifting toward center',             desc:'하단 기원 구조, 중앙으로 상승'},
+      {id:'COMP_006',name:'Vertical Narrow Center',prompt:'narrow center with expanded edges, top-bottom open space',  desc:'중앙이 좁고 상하 여백 강조'},
+      {id:'COMP_007',name:'Dual Edge Expansion',   prompt:'expanded left and right edges with a compressed middle zone',desc:'양쪽 엣지 확장, 중앙 압축'},
+    ]},
+    {key:'SHAPE',slot:'SHAPE',title:'형태 (SHAPE)',desc:'그래픽 요소의 기본 형태를 선택하세요.',type:'normal',options:[
+      {id:'SHAPE_001',name:'Ribbon',        prompt:'long flowing ribbon-like shape',desc:'리본 형태'},
+      {id:'SHAPE_002',name:'Sheet',         prompt:'wide flat sheet-like surface',  desc:'넓고 평평한 시트'},
+      {id:'SHAPE_003',name:'Membrane',      prompt:'thin flexible membrane surface',desc:'얇고 유연한 막 형태'},
+      {id:'SHAPE_004',name:'Wave Band',     prompt:'layered wave band structure',   desc:'레이어된 웨이브 밴드'},
+      {id:'SHAPE_005',name:'Folded Surface',prompt:'folded paper-like structure',   desc:'종이 접힌 형태'},
+      {id:'SHAPE_006',name:'Organic Blob',  prompt:'soft organic fluid shape',      desc:'둥글고 유기적인 유체'},
+    ]},
+    {key:'FLOW',slot:'FLOW',title:'이미지 흐름 (FLOW)',desc:'비주얼의 움직임 방향과 흐름을 선택하세요.',type:'normal',options:[
+      {id:'FLOW_001',name:'Soft Wave',      prompt:'smooth flowing curves',          desc:'부드럽고 연속적인 웨이브'},
+      {id:'FLOW_002',name:'Diagonal Sweep', prompt:'strong diagonal motion',         desc:'대각선 방향의 강한 흐름'},
+      {id:'FLOW_003',name:'Curved Arc',     prompt:'arc-shaped directional flow',    desc:'곡선 아크 형태의 방향 흐름'},
+      {id:'FLOW_004',name:'Edge Wrap Flow', prompt:'flow wrapping along edges',      desc:'가장자리를 따라 감싸는 흐름'},
+      {id:'FLOW_005',name:'Twisted Flow',   prompt:'slightly twisted flowing motion', desc:'살짝 비틀린 흐름'},
+    ]},
+    {key:'COLOR_MODE',slot:'COLOR',title:'색상 선택 방식',desc:'색상을 어떻게 선택할까요?',type:'normal',options:[
+      {id:'MODE_MULTI',name:'직접 선택',prompt:'',desc:'19가지 컬러 중 2~4개 직접 탭 선택'},
+      {id:'MODE_COMBO',name:'콤보 선택',prompt:'',desc:'유사·대비·중성·테마 계열 조합 선택'},
+    ]},
+    {key:'SURF',slot:'SURF',title:'표면 처리 (SURF)',desc:'레이어 표면의 질감을 선택하세요.',type:'normal',options:[
+      {id:'SURF_001',name:'Flat Layers',        prompt:'clean flat vector layers',           desc:'플랫 벡터 레이어'},
+      {id:'SURF_002',name:'Gradient Layers',    prompt:'smooth gradient layered surfaces',   desc:'그라디언트 레이어'},
+      {id:'SURF_003',name:'Transparent Layers', prompt:'semi-transparent overlapping layers',desc:'반투명 겹침 레이어'},
+      {id:'SURF_004',name:'Pattern Overlay',    prompt:'line or dot pattern overlay',        desc:'패턴 오버레이'},
+    ]},
+    {key:'MATERIAL',slot:'MATERIAL',title:'재질 (MATERIAL)',desc:'표면 재질의 느낌을 선택하세요.',type:'normal',options:[
+      {id:'MAT_001',name:'Flat',      prompt:'flat vector-like material',           desc:'플랫하고 단순한 벡터'},
+      {id:'MAT_002',name:'Gradient',  prompt:'silk-like smooth gradient material',  desc:'실크 같은 부드러운 그라디언트'},
+      {id:'MAT_003',name:'Glass',     prompt:'liquid glass transparent material',   desc:'액체 유리 느낌 투명 재질'},
+      {id:'MAT_004',name:'Paper Cut', prompt:'layered matte paper cut style',       desc:'무광 종이 오려낸 레이어'},
+      {id:'MAT_005',name:'Soft 3D',   prompt:'soft volumetric dimensional material',desc:'부드럽고 입체감 있는 재질'},
+    ]},
+    {key:'MOOD',slot:'MOOD',title:'무드 (MOOD)',desc:'전체적인 분위기와 톤을 선택하세요.',type:'normal',options:[
+      {id:'MOOD_001',name:'Clean Official',   prompt:'clean and trustworthy tone',           desc:'공식적이고 신뢰감 있는 분위기'},
+      {id:'MOOD_002',name:'Modern Minimal',   prompt:'minimal and modern atmosphere',         desc:'현대적이고 조용한 미니멀 분위기'},
+      {id:'MOOD_003',name:'High Contrast',    prompt:'bold and high contrast visual style',   desc:'강렬하고 대비가 뚜렷한 스타일'},
+      {id:'MOOD_004',name:'Calm Professional',prompt:'calm and professional corporate tone',  desc:'차분하고 안정적인 기업 분위기'},
+    ]},
+    {key:'LIGHTING',slot:'LIGHTING',title:'조명 (LIGHTING)',desc:'빛과 그림자 처리 방식을 선택하세요.',type:'normal',options:[
+      {id:'LIGHT_001',name:'None',        prompt:'lighting: none',         desc:'조명 효과 없음'},
+      {id:'LIGHT_002',name:'Soft Shadow', prompt:'lighting: soft shadow',  desc:'부드러운 그림자 깊이감'},
+      {id:'LIGHT_003',name:'Inner Shadow',prompt:'lighting: inner shadow', desc:'내부 그림자 처리'},
+      {id:'LIGHT_004',name:'Glow',        prompt:'lighting: glow',         desc:'발광 효과'},
+      {id:'LIGHT_005',name:'Highlight',   prompt:'lighting: highlight',    desc:'하이라이트 강조'},
+    ]},
+  ];
+
+  // COLOR_MODE 다음에 컬러 분기 삽입
+  const colorSteps = [];
+  const mode = selections['COLOR_MODE'];
+  if (mode && mode.id === 'MODE_MULTI') {
+    colorSteps.push({key:'COLOR_MULTI',slot:'COLOR',title:'색상 직접 선택',desc:'원하는 색상을 2~4개 탭한 후 완료 버튼을 눌러주세요.',type:'color_multi'});
+    colorSteps.push({key:'COLOR_TONE', slot:'COLOR',title:'컬러 톤',       desc:'색상의 전체적인 분위기를 선택하세요.',type:'color_tone'});
+  } else if (mode && mode.id === 'MODE_COMBO') {
+    colorSteps.push({key:'COLOR_GROUP',slot:'COLOR',title:'컬러 계열',desc:'색상 조합 방식을 선택하세요.',type:'normal',options:[
+      {id:'GRP_ANALOG',  name:'Analog    유사계열',prompt:'analogous color harmony',    desc:'인접한 색상끼리 자연스러운 흐름'},
+      {id:'GRP_CONTRAST',name:'Contrast  대비계열',prompt:'complementary color contrast',desc:'반대색끼리 강렬한 시각 대비'},
+      {id:'GRP_NEUTRAL', name:'Neutral   중성계열',prompt:'neutral with accent color',   desc:'무채색 베이스 + 포인트 컬러'},
+      {id:'GRP_MIX',     name:'Mix       테마계열',prompt:'thematic color mix',          desc:'계절·문화·감성·자연 테마 조합'},
+    ]});
+    const grp = selections['COLOR_GROUP'];
+    if (grp && grp.id === 'GRP_MIX') {
+      colorSteps.push({key:'COLOR_MIX_TYPE',slot:'COLOR',title:'테마 선택',desc:'어떤 테마 계열로 구성할까요?',type:'normal',options:[
+        {id:'MIX_SEASONAL',name:'Seasonal  계절계열',prompt:'seasonal color theme', desc:'봄/여름/가을/겨울 느낌'},
+        {id:'MIX_CULTURAL',name:'Cultural  문화계열',prompt:'cultural color theme', desc:'한국/일본/유럽/열대 문화'},
+        {id:'MIX_EMOTION', name:'Emotion   감성계열',prompt:'emotional color theme',desc:'고요/열정/신비/기쁨 감성'},
+        {id:'MIX_NATURE',  name:'Nature    자연계열',prompt:'nature color theme',   desc:'바다/숲/사막/오로라 자연'},
+      ]});
+    }
+    colorSteps.push({key:'COLOR_TONE',slot:'COLOR',title:'컬러 톤',desc:'색상의 전체적인 분위기를 선택하세요.',type:'color_tone'});
+    colorSteps.push({key:'COLOR_NUM', slot:'COLOR',title:'컬러 수', desc:'몇 가지 색상을 조합할까요?',type:'normal',options:[
+      {id:'NUM_2',name:'2 Color',prompt:'2-color combination',desc:'심플하고 명확한 2색 조합'},
+      {id:'NUM_3',name:'3 Color',prompt:'3-color combination',desc:'균형 잡힌 3색 조합'},
+      {id:'NUM_4',name:'4 Color',prompt:'4-color combination',desc:'풍부하고 다채로운 4색 조합'},
+    ]});
+    const num = selections['COLOR_NUM'];
+    const mix = selections['COLOR_MIX_TYPE'];
+    if (num && grp) {
+      const nk = num.id==='NUM_2'?'2':num.id==='NUM_3'?'3':'4';
+      const ck = grp.id==='GRP_ANALOG'?'ANALOG':grp.id==='GRP_CONTRAST'?'CONTRAST':grp.id==='GRP_NEUTRAL'?'NEUTRAL':grp.id==='GRP_MIX'&&mix?mix.id:'';
+      if (ck && COMBOS[ck] && COMBOS[ck][nk])
+        colorSteps.push({key:'COLOR_COMBO',slot:'COLOR',title:'컬러 조합 선택',desc:'원하는 색상 조합을 선택하세요.',type:'color_combo',comboKey:ck,numKey:nk});
+    }
+  }
+
+  const cmIdx = base.findIndex(s => s.key === 'COLOR_MODE');
+  base.splice(cmIdx + 1, 0, ...colorSteps);
+  base.push({key:'AR',slot:'AR',title:'출력 비율 (AR)',desc:'이미지 출력 비율을 선택하세요.',type:'normal',options:[
+    {id:'AR_001',name:'4:1  초와이드 배너',prompt:'--ar 4:1',desc:'가로형 배너 최적 비율'},
+  ]});
+  return base;
+}
+
+function getCurrentIdx() {
+  const steps = getSteps();
+  for (let i = 0; i < steps.length; i++) {
+    const key = steps[i].key;
+    if (key === 'COLOR_MULTI') {
+      if (multiColors.length < 2 || !selections['COLOR_MULTI']) return i;
+    } else if (!selections[key]) return i;
+  }
+  return steps.length;
+}
+
+function render() {
+  const steps = getSteps();
+  const idx   = getCurrentIdx();
+  const total = steps.length;
+  const done  = Object.keys(selections).length;
+  document.getElementById('progText').textContent = done + ' / ' + total;
+  document.getElementById('progFill').style.width = (done/total*100) + '%';
+  updateOutput(steps);
+
+  const qBlock     = document.getElementById('qBlock');
+  const doneScreen = document.getElementById('doneScreen');
+  const backArea   = document.getElementById('backArea');
+
+  if (idx >= total) {
+    qBlock.innerHTML = ''; qBlock.style.display = 'none';
+    doneScreen.style.display = 'flex'; backArea.innerHTML = '';
+    const d = document.getElementById('outputDivider');
+    if (d) d.style.display = 'block';
+    const btnB = document.getElementById('btnBack');
+    if (btnB) { btnB.style.opacity='0.3'; btnB.style.pointerEvents='none'; }
+    return;
+  }
+
+  doneScreen.style.display = 'none';
+  qBlock.style.display = 'block';
+  backArea.innerHTML = '';
+
+  const step = steps[idx];
+  const sel  = selections[step.key];
+  let body = '';
+
+  if (step.type === 'color_multi') {
+    const picked = multiColors;
+    const swatches = BASE_COLORS.map(c => {
+      const on = picked.includes(c.id);
+      return '<div class="color-btn ' + (on?'selected':'') + '" style="position:relative" onclick="toggleMultiColor(\'' + c.id + '\')">' +
+        '<div class="color-swatch" style="background:' + c.hex + '">' +
+        (on ? '<div style="position:absolute;top:-2px;right:-2px;width:12px;height:12px;background:var(--success);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;color:#000;font-weight:bold;border:1px solid #000">✓</div>' : '') +
+        '</div>' +
+        '<div class="color-name">' + c.name + '</div>' +
+        '</div>';
+    }).join('');
+    body = '<div style="margin-bottom:8px;font-size:12px;color:var(--muted)">선택됨: <span style="color:var(--accent2);font-weight:bold">' + picked.length + '개</span> <span style="font-size:11px">(2~4개)</span></div>' +
+      '<div class="color-grid">' + swatches + '</div>' +
+      '<button onclick="confirmMultiColor()" style="width:100%;margin-top:10px;padding:12px;border:none;border-radius:8px;font-family:Arial,sans-serif;font-size:14px;cursor:' + (picked.length>=2?'pointer':'not-allowed') + ';background:' + (picked.length>=2?'var(--accent)':'var(--border)') + ';color:' + (picked.length>=2?'#fff':'var(--muted)') + ';">' + (picked.length>=2 ? '✓ '+picked.length+'색 선택 완료 →' : '2개 이상 선택해주세요') + '</button>';
+
+  } else if (step.type === 'color_tone') {
+    body = '<div class="tone-grid">' + TONES.map(function(t) {
+      return '<div class="tone-btn ' + (sel&&sel.id===t.id?'selected':'') + '" onclick="pick(\'COLOR_TONE\',\'' + t.id + '\')">' +
+      '<div class="tone-name">' + t.name + '</div>' +
+      '<div class="tone-desc">' + t.desc + '</div>' +
+      '<div class="tone-bar" style="background:' + t.bar + '"></div></div>';
+    }).join('') + '</div>';
+
+  } else if (step.type === 'color_combo') {
+    const list = COMBOS[step.comboKey][step.numKey] || [];
+    body = '<div class="combo-list">' + list.map(function(c) {
+      return '<div class="combo-btn ' + (sel&&sel.id===c.id?'selected':'') + '" onclick="pick(\'COLOR_COMBO\',\'' + c.id + '\')">' +
+      '<div class="combo-swatches">' + c.colors.map(function(n){return '<div class="combo-swatch" style="background:' + hx(n) + '"></div>';}).join('') + '</div>' +
+      '<div class="combo-info"><div class="combo-id">' + c.id + '</div><div class="combo-name">' + c.name + '</div><div class="combo-desc">' + c.ko + '</div></div>' +
+      '<div class="combo-check">✓</div></div>';
+    }).join('') + '</div>';
+
+  } else {
+    body = '<div class="options-list">' + step.options.map(function(o) {
+      return '<div class="opt ' + (sel&&sel.id===o.id?'selected':'') + '" onclick="pick(\''+step.key+'\',\''+o.id+'\')">' +
+      '<div class="opt-id">' + o.id + '</div>' +
+      '<div class="opt-name">' + o.name + '</div>' +
+      '<div class="opt-desc">' + o.desc + '</div>' +
+      '<div class="opt-check">✓</div></div>';
+    }).join('') + '</div>';
+  }
+
+  const btnBack = document.getElementById('btnBack');
+  if (btnBack) { btnBack.style.opacity=idx>0?'1':'0.3'; btnBack.style.pointerEvents=idx>0?'auto':'none'; }
+
+  qBlock.innerHTML = '<div class="q-block">' +
+    '<div class="q-step">STEP ' + (idx+1) + ' / ' + total + '</div>' +
+    '<div class="q-title">' + step.title + '</div>' +
+    '<div class="q-desc">' + step.desc + '</div>' +
+    body + '</div>';
+}
+
+function toggleMultiColor(id) {
+  if (multiColors.includes(id)) { multiColors = multiColors.filter(c=>c!==id); }
+  else { if (multiColors.length>=4) return; multiColors.push(id); }
+  render();
+}
+
+function confirmMultiColor() {
+  if (multiColors.length < 2) return;
+  const picked = multiColors.map(id => BASE_COLORS.find(c=>c.id===id));
+  selections['COLOR_MULTI'] = {
+    id:'COLOR_MULTI', name: picked.map(c=>c.name).join('+'),
+    colors: multiColors.slice(), prompt: picked.map(c=>c.prompt).join(' and '),
+  };
+  setTimeout(render, 180);
+}
+
+function pick(key, id) {
+  const steps = getSteps();
+  let opt;
+  if (key==='COLOR_TONE') opt = TONES.find(t=>t.id===id);
+  else if (key==='COLOR_COMBO') { const s2=steps.find(s=>s.key==='COLOR_COMBO'); opt=(COMBOS[s2.comboKey][s2.numKey]||[]).find(c=>c.id===id); }
+  else { const step=steps.find(s=>s.key===key); opt=step.options.find(o=>o.id===id); }
+  selections[key] = opt;
+  setTimeout(render, 180);
+}
+
+function goBack() {
+  const steps = getSteps();
+  const idx = getCurrentIdx();
+  const prevIdx = Math.max(0, idx-1);
+  const prevKey = steps[prevIdx].key;
+  const colorKeys = ['COLOR_MULTI','COLOR_GROUP','COLOR_MIX_TYPE','COLOR_TONE','COLOR_NUM','COLOR_COMBO'];
+  if (prevKey==='COLOR_MODE') { colorKeys.forEach(k=>delete selections[k]); multiColors=[]; delete selections['COLOR_MODE']; }
+  else if (prevKey==='COLOR_MULTI') { multiColors=[]; delete selections['COLOR_MULTI']; }
+  else if (colorKeys.includes(prevKey)) { const from=colorKeys.indexOf(prevKey); colorKeys.slice(from).forEach(k=>delete selections[k]); }
+  else delete selections[prevKey];
+  render();
+}
+
+function resetAll() { selections={}; multiColors=[]; render(); window.scrollTo(0,0); }
+
+function updateOutput(steps) {
+  steps = steps || getSteps();
+  const keys = Object.keys(selections);
+  const nameEl = document.getElementById('recipeName');
+  const divider = document.getElementById('outputDivider');
+  if (!keys.length) {
+    nameEl.textContent = '—';
+    document.getElementById('tagArea').innerHTML = '<span style="color:#6b6890;font-size:11px">슬롯을 선택하면 표시됩니다</span>';
+    document.getElementById('promptOutput').innerHTML = '<span style="color:#6b6890;font-size:12px;font-style:italic">슬롯 선택 시 실시간으로 쌓입니다.</span>';
+    if (divider) divider.style.display='none';
+    return;
+  }
+  if (divider) divider.style.display='block';
+  const p  = selections['PURPOSE']?selections['PURPOSE'].name:'?';
+  const sh = selections['SHAPE']  ?selections['SHAPE'].name  :'?';
+  const m  = selections['MOOD']   ?selections['MOOD'].name   :'?';
+  nameEl.textContent = p.toUpperCase()+'_'+sh.toUpperCase().replace(/ /g,'_')+'_'+m.toUpperCase().replace(/ /g,'_');
+
+  const tagHTML = steps.filter(s=>selections[s.key]).map(s=>{
+    const c = SLOT_COLORS[s.slot]||SLOT_COLORS['COLOR'];
+    const sel = selections[s.key];
+    const val = sel.name||sel.id;
+    if (s.key==='COLOR_TONE') {
+      const tone=TONES.find(t=>t.id===sel.id);
+      return '<div class="tag" style="background:'+c.bg+';border-color:'+c.border+';display:flex;flex-direction:column;gap:3px;padding:4px 8px;">' +
+        '<div><span class="k" style="color:'+c.key+'">'+s.slot+'</span><span class="v" style="color:'+c.val+';margin-left:4px">'+val+'</span></div>' +
+        (tone?'<div style="height:5px;width:80px;border-radius:3px;background:'+tone.bar+'"></div>':'') + '</div>';
+    }
+    if (s.key==='COLOR_MULTI'&&sel.colors) {
+      const sw=sel.colors.map(id=>{const bc=BASE_COLORS.find(b=>b.id===id);return bc?'<div style="width:14px;height:14px;border-radius:50%;background:'+bc.hex+';border:1px solid rgba(255,255,255,0.2)"></div>':'';}).join('');
+      return '<div class="tag" style="background:'+c.bg+';border-color:'+c.border+';display:flex;flex-direction:column;gap:3px;padding:4px 8px;">' +
+        '<div><span class="k" style="color:'+c.key+'">'+s.slot+'</span><span class="v" style="color:'+c.val+';margin-left:4px">'+sel.colors.length+'색 직접선택</span></div>' +
+        '<div style="display:flex;gap:3px">'+sw+'</div></div>';
+    }
+    if (s.key==='COLOR_COMBO'&&sel.colors) {
+      const sw=sel.colors.map(n=>'<div style="width:12px;height:12px;border-radius:50%;background:'+hx(n)+';border:1px solid rgba(255,255,255,0.2)"></div>').join('');
+      return '<div class="tag" style="background:'+c.bg+';border-color:'+c.border+';display:flex;flex-direction:column;gap:3px;padding:4px 8px;">' +
+        '<div><span class="k" style="color:'+c.key+'">'+s.slot+'</span><span class="v" style="color:'+c.val+';margin-left:4px">'+val+'</span></div>' +
+        '<div style="display:flex;gap:3px">'+sw+'</div></div>';
+    }
+    return '<div class="tag" style="background:'+c.bg+';border-color:'+c.border+'">' +
+      '<span class="k" style="color:'+c.key+'">'+s.slot+'</span>' +
+      '<span class="v" style="color:'+c.val+'">'+val+'</span></div>';
+  }).join('');
+  document.getElementById('tagArea').innerHTML = tagHTML;
+  buildPrompt(steps);
+  // fal 섹션 표시 체크
+  const _falSec = document.getElementById('falSection');
+  if (_falSec) {
+    const _allDone = Object.keys(selections).length >= steps.length && steps.length > 0;
+    _falSec.style.display = _allDone ? 'block' : 'none';
+  }
+  // 노션 섹션 표시 체크
+  const _notionSec = document.getElementById('notionSection');
+  if (_notionSec) {
+    const _allDone2 = Object.keys(selections).length >= steps.length && steps.length > 0;
+    _notionSec.style.display = _allDone2 ? 'block' : 'none';
+  }
+}
+
+function buildPrompt(steps) {
+  const s = selections;
+  const keys = Object.keys(s);
+  if (!keys.length) return;
+  const total = (steps||getSteps()).length;
+  const allDone = keys.length===total;
+  const en=[], ko=[];
+  if (allDone) {
+    en.push('Create a high-quality abstract wave banner background.');
+    en.push('Use a clean layout with clearly defined white space for text.');
+    en.push('Ensure balanced composition, smooth flow, and uncluttered design.');
+    ko.push('고품질 추상 웨이브 배너 배경 생성.');
+    ko.push('텍스트를 위한 명확한 여백이 있는 깔끔한 레이아웃.');
+    ko.push('균형 잡힌 구도, 부드러운 흐름, 정돈된 디자인.');
+    en.push(''); ko.push('');
+  }
+  ['PURPOSE','COMP','SHAPE','FLOW','SURF','MATERIAL','MOOD','LIGHTING'].forEach(k=>{
+    if (s[k]) { en.push(s[k].prompt); ko.push(KO_PROMPTS[s[k].id]||s[k].desc||''); }
+  });
+  if (s['COLOR_MULTI']&&s['COLOR_MULTI'].colors) {
+    const tone=s['COLOR_TONE']?', '+s['COLOR_TONE'].prompt:'';
+    en.push('color palette: '+s['COLOR_MULTI'].prompt+tone);
+    ko.push('컬러: '+s['COLOR_MULTI'].name+(s['COLOR_TONE']?' / 톤: '+s['COLOR_TONE'].name:''));
+  } else if (s['COLOR_COMBO']) {
+    const tone=s['COLOR_TONE']?', '+s['COLOR_TONE'].prompt:'';
+    en.push('color palette: '+s['COLOR_COMBO'].prompt+tone);
+    ko.push('컬러: '+s['COLOR_COMBO'].name+(s['COLOR_TONE']?' / 톤: '+s['COLOR_TONE'].name:''));
+  }
+  if (s['AR']) { en.push(s['AR'].prompt); ko.push('출력 비율 4:1'); }
+  if (allDone) {
+    en.push('','Enhancements:','- clear separation between layers','- controlled pattern density','- clean edges and anti-aliased curves','- stable negative space','- subtle depth layering for visual hierarchy','- subtle gradient transitions','','--no text, logo, watermark');
+    ko.push('','보정 사항:','- 레이어 간 명확한 분리','- 패턴 밀도 조절','- 깔끔한 엣지, 안티앨리어싱 곡선','- 안정적인 여백','- 시각적 위계를 위한 미묘한 깊이감','- 부드러운 그라디언트 전환','','--텍스트, 로고, 워터마크 없음');
+  }
+  const maxLen=Math.max(en.length,ko.length);
+  while(en.length<maxLen)en.push(''); while(ko.length<maxLen)ko.push('');
+  const html=en.map((e,i)=>{
+    const k=ko[i]||'';
+    if(!e&&!k)return '';
+    if(e.startsWith('--')||e.startsWith('Enhancements')||e.startsWith('보정'))
+      return '<div style="margin-top:4px"><span style="color:#7c6aff;font-size:13px">'+e+'</span>'+(k?'<span style="color:var(--muted);font-size:11px;margin-left:4px">// '+k+'</span>':'')+'</div>';
+    if(e.startsWith('-'))
+      return '<div style="padding-left:8px"><span style="color:#c4c0f0;font-size:13px">'+e+'</span>'+(k?'<span style="color:var(--muted);font-size:11px;margin-left:4px">// '+k+'</span>':'')+'</div>';
+    return '<div><div style="color:#e8e6ff;font-size:14px;line-height:1.2">'+e+'</div>'+(k?'<div style="color:var(--muted);font-size:12px;line-height:1.2;margin-bottom:4px">↳ '+k+'</div>':'')+'</div>';
+  }).join('');
+  document.getElementById('promptOutput').innerHTML = html;
+}
+
+function copyPrompt() {
+  const s=selections;
+  if(!Object.keys(s).length)return;
+  const lines=['Create a high-quality abstract wave banner background.','Use a clean layout with clearly defined white space for text.','Ensure balanced composition, smooth flow, and uncluttered design.',''];
+  ['PURPOSE','COMP','SHAPE','FLOW','SURF','MATERIAL','MOOD','LIGHTING'].forEach(k=>{if(s[k])lines.push(s[k].prompt);});
+  if(s['COLOR_MULTI']&&s['COLOR_MULTI'].colors){const t=s['COLOR_TONE']?', '+s['COLOR_TONE'].prompt:'';lines.push('color palette: '+s['COLOR_MULTI'].prompt+t);}
+  else if(s['COLOR_COMBO']){const t=s['COLOR_TONE']?', '+s['COLOR_TONE'].prompt:'';lines.push('color palette: '+s['COLOR_COMBO'].prompt+t);}
+  if(s['AR'])lines.push(s['AR'].prompt);
+  lines.push('','Enhancements:','- clear separation between layers','- controlled pattern density','- clean edges and anti-aliased curves','- stable negative space','- subtle depth layering for visual hierarchy','- subtle gradient transitions','','--no text, logo, watermark');
+  navigator.clipboard.writeText(lines.join('\n')).then(()=>{
+    const btn=document.getElementById('copyBtn');
+    btn.textContent='[ COPIED ✓ ]';btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='[ COPY PROMPT ]';btn.classList.remove('copied');},2000);
+  });
+}
+
+// ===== FAL.AI 연동 =====
+
+// 저장된 키 불러오기
+(function initFalKey() {
+  try {
+    const saved = sessionStorage.getItem('fal_key');
+    if (saved) { document.getElementById('falKey').value = saved; setKeyReady(true); }
+  } catch(e) {}
+})();
+
+function saveKey() {
+  const key = document.getElementById('falKey').value.trim();
+  if (!key) { setStatus('API Key를 입력해주세요.', 'warn'); return; }
+  try { sessionStorage.setItem('fal_key', key); } catch(e) {}
+  setKeyReady(true);
+  setStatus('✓ API Key 저장됨 · 생성 버튼을 누르세요.', 'ok');
+}
+
+function setKeyReady(ready) {
+  document.getElementById('btnPreview').disabled = !ready;
+  document.getElementById('btnHD').disabled = !ready;
+}
+
+function setStatus(msg, type) {
+  const el = document.getElementById('falStatusText');
+  const sp = document.getElementById('falSpinner');
+  el.textContent = msg;
+  el.style.color = type === 'ok' ? '#4fffb0' : type === 'warn' ? '#ffb300' : type === 'err' ? '#ff6b6b' : '#6b6890';
+  sp.style.display = type === 'loading' ? 'block' : 'none';
+}
+
+function getPromptText() {
+  const s = selections;
+  const lines = [
+    'Create a high-quality abstract wave banner background.',
+    'Use a clean layout with clearly defined white space for text.',
+    'Ensure balanced composition, smooth flow, and uncluttered design.',
+    ''
+  ];
+  ['PURPOSE','COMP','SHAPE','FLOW','SURF','MATERIAL','MOOD','LIGHTING'].forEach(k => {
+    if (s[k]) lines.push(s[k].prompt);
+  });
+  if (s['COLOR_MULTI'] && s['COLOR_MULTI'].colors) {
+    const t = s['COLOR_TONE'] ? ', ' + s['COLOR_TONE'].prompt : '';
+    lines.push('color palette: ' + s['COLOR_MULTI'].prompt + t);
+  } else if (s['COLOR_COMBO']) {
+    const t = s['COLOR_TONE'] ? ', ' + s['COLOR_TONE'].prompt : '';
+    lines.push('color palette: ' + s['COLOR_COMBO'].prompt + t);
+  }
+  lines.push('', 'Enhancements:',
+    '- clear separation between layers',
+    '- controlled pattern density',
+    '- clean edges and anti-aliased curves',
+    '- stable negative space',
+    '- subtle depth layering for visual hierarchy',
+    '- subtle gradient transitions',
+    '', '--no text, logo, watermark');
+  return lines.join('\n');
+}
+
+let lastImgUrl = '';
+let lastMode = '';
+
+async function generateFal(mode) {
+  const key = document.getElementById('falKey').value.trim();
+  if (!key) { setStatus('API Key를 먼저 저장해주세요.', 'warn'); return; }
+
+  const prompt = getPromptText();
+  if (!prompt.includes('wave banner')) { setStatus('슬롯을 모두 선택한 후 생성해주세요.', 'warn'); return; }
+
+  // 해상도 설정 — FLUX Schnell은 width/height 대신 image_size 사용
+  const isPreview = mode === 'preview';
+  // preview: 256x64 (4:1), HD: 1024x256 (4:1)
+  const width  = isPreview ? 512  : 1024;
+  const height = isPreview ? 128  : 256;
+  const steps  = isPreview ? 2    : 28;     // Schnell=2, Dev=28
+  const costEst = isPreview ? '~$0.003' : '~$0.025';
+
+  lastMode = mode;
+  setStatus('생성 중...', 'loading');
+  document.getElementById('btnPreview').disabled = true;
+  document.getElementById('btnHD').disabled = true;
+
+  try {
+    // fal.ai FLUX Schnell — 직접 호출 (Schnell은 빠르므로 Queue 불필요)
+    const endpoint = isPreview
+      ? 'https://fal.run/fal-ai/flux/schnell'
+      : 'https://fal.run/fal-ai/flux/dev';   // HD는 dev 모델로 더 좋은 품질
+
+    setStatus(`${isPreview ? 'Schnell' : 'Dev'} 모델 호출 중...`, 'loading');
+
+    const res = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Key ' + key,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        prompt: prompt,
+        image_size: { width, height },
+        num_inference_steps: steps,
+        num_images: 1,
+        enable_safety_checker: false,
+        sync_mode: true,   // 동기 응답 — 결과 바로 받기
+      })
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      // 401: 키 오류, 402: 크레딧 부족, 422: 파라미터 오류
+      if (res.status === 401) throw new Error('API Key가 잘못됐거나 만료됐습니다.');
+      if (res.status === 402) throw new Error('fal.ai 크레딧이 부족합니다. 충전 후 재시도해주세요.');
+      throw new Error(err.detail || err.message || `HTTP ${res.status}`);
+    }
+
+    const result = await res.json();
+    const imgUrl = result.images?.[0]?.url || result.image?.url;
+    if (!imgUrl) throw new Error('이미지 URL을 받지 못했습니다. 응답: ' + JSON.stringify(result).slice(0,200));
+
+    lastImgUrl = imgUrl;
+    document.getElementById('falPreviewImg').src = imgUrl;
+    document.getElementById('falPreviewWrap').classList.add('visible');
+    document.getElementById('falImgInfo').innerHTML =
+      `${width}×${height}px · ${isPreview ? 'PREVIEW' : 'HD'} <span class="fal-cost-chip">${costEst}</span>`;
+    setStatus(`✓ 완료! ${isPreview ? 'HD 생성 버튼으로 고퀄 뽑기 가능' : '고퀄 이미지 완성!'}`, 'ok');
+
+  } catch(e) {
+    setStatus('오류: ' + e.message, 'err');
+    console.error(e);
+  } finally {
+    document.getElementById('btnPreview').disabled = false;
+    document.getElementById('btnHD').disabled = false;
+  }
+}
+
+function downloadImg() {
+  if (!lastImgUrl) return;
+  const a = document.createElement('a');
+  a.href = lastImgUrl;
+  a.download = 'BIM_' + (document.getElementById('recipeName').textContent || 'image') + '_' + lastMode + '.png';
+  a.target = '_blank';
+  a.click();
+}
+
+// ===== 노션 연동 =====
+
+(function initNotionKey() {
+  try {
+    const saved = sessionStorage.getItem('notion_token');
+    if (saved) {
+      document.getElementById('notionToken').value = saved;
+      setNotionReady(true);
+    }
+  } catch(e) {}
+})();
+
+function saveNotionKey() {
+  const token = document.getElementById('notionToken').value.trim();
+  if (!token) { setNotionStatus('통합 시크릿을 입력해주세요.', 'warn'); return; }
+  if (!token.startsWith('secret_') && !token.startsWith('ntn_')) { setNotionStatus('ntn_ 또는 secret_ 로 시작하는 시크릿을 입력해주세요.', 'warn'); return; }
+  try { sessionStorage.setItem('notion_token', token); } catch(e) {}
+  setNotionReady(true);
+  setNotionStatus('✓ 저장됨 · 레시피 저장 버튼을 누르세요.', 'ok');
+}
+
+function setNotionReady(ready) {
+  document.getElementById('btnNotionSave').disabled = !ready;
+}
+
+function setNotionStatus(msg, type) {
+  const el = document.getElementById('notionStatusText');
+  const sp = document.getElementById('notionSpinner');
+  el.textContent = msg;
+  el.style.color = type==='ok' ? '#4fffb0' : type==='warn' ? '#ffb300' : type==='err' ? '#ff6b6b' : '#6b6890';
+  sp.style.display = type==='loading' ? 'block' : 'none';
+}
+
+async function saveToNotion() {
+  const token = document.getElementById('notionToken').value.trim();
+  const dbId  = document.getElementById('notionDbId').value.trim().replace(/-/g,'');
+  if (!token || !dbId) { setNotionStatus('시크릿과 DB ID를 확인해주세요.', 'warn'); return; }
+
+  const s = selections;
+  if (!Object.keys(s).length) { setNotionStatus('슬롯을 먼저 선택해주세요.', 'warn'); return; }
+
+  setNotionStatus('노션에 저장 중...', 'loading');
+  document.getElementById('btnNotionSave').disabled = true;
+
+  // 레시피 이름
+  const recipeName = document.getElementById('recipeName').textContent || 'BIM_RECIPE';
+
+  // 프롬프트 텍스트
+  const promptLines = [];
+  promptLines.push('Create a high-quality abstract wave banner background.');
+  promptLines.push('Use a clean layout with clearly defined white space for text.');
+  promptLines.push('Ensure balanced composition, smooth flow, and uncluttered design.');
+  ['PURPOSE','COMP','SHAPE','FLOW','SURF','MATERIAL','MOOD','LIGHTING'].forEach(k => {
+    if (s[k]) promptLines.push(s[k].prompt);
+  });
+  if (s['COLOR_MULTI']) { const t=s['COLOR_TONE']?', '+s['COLOR_TONE'].prompt:''; promptLines.push('color palette: '+s['COLOR_MULTI'].prompt+t); }
+  else if (s['COLOR_COMBO']) { const t=s['COLOR_TONE']?', '+s['COLOR_TONE'].prompt:''; promptLines.push('color palette: '+s['COLOR_COMBO'].prompt+t); }
+  if (s['AR']) promptLines.push(s['AR'].prompt);
+  promptLines.push('','Enhancements:','- clear separation between layers','- controlled pattern density','- clean edges and anti-aliased curves','- stable negative space','--no text, logo, watermark');
+  const promptText = promptLines.join('\n');
+
+  // 노션 DB ID 포맷 (하이픈 추가)
+  const fmtDbId = dbId.replace(/(.{8})(.{4})(.{4})(.{4})(.{12})/, '$1-$2-$3-$4-$5');
+
+  // 노션 API 프록시 — 직접 호출 (CORS 이슈로 Workers 필요할 수 있음)
+  try {
+    // 날짜+레시피 형태로 RECIPE 제목 생성
+    const today = new Date().toISOString().split('T')[0];
+    const recipeTitle = today + '_' + recipeName;
+
+    const body = {
+      parent: { database_id: fmtDbId },
+      properties: {
+        'RECIPE':    { title: [{ text: { content: recipeTitle } }] },
+        'PURPOSE':   s['PURPOSE']  ? { rich_text: [{ text: { content: s['PURPOSE'].name  } }] } : undefined,
+        'COMP':      s['COMP']     ? { rich_text: [{ text: { content: s['COMP'].name     } }] } : undefined,
+        'SHAPE':     s['SHAPE']    ? { rich_text: [{ text: { content: s['SHAPE'].name    } }] } : undefined,
+        'FLOW':      s['FLOW']     ? { rich_text: [{ text: { content: s['FLOW'].name     } }] } : undefined,
+        'SURF':      s['SURF']     ? { rich_text: [{ text: { content: s['SURF'].name     } }] } : undefined,
+        'MATERIAL':  s['MATERIAL'] ? { rich_text: [{ text: { content: s['MATERIAL'].name } }] } : undefined,
+        'MOOD':      s['MOOD']     ? { rich_text: [{ text: { content: s['MOOD'].name     } }] } : undefined,
+        'LIGHTING':  s['LIGHTING'] ? { rich_text: [{ text: { content: s['LIGHTING'].name } }] } : undefined,
+        'COLOR':     s['COLOR_COMBO'] ? { rich_text: [{ text: { content: s['COLOR_COMBO'].name } }] } :
+                     s['COLOR_MULTI'] ? { rich_text: [{ text: { content: s['COLOR_MULTI'].name } }] } : undefined,
+        'TONE':      s['COLOR_TONE'] ? { rich_text: [{ text: { content: s['COLOR_TONE'].name } }] } : undefined,
+        'AR':        s['AR'] ? { rich_text: [{ text: { content: s['AR'].name } }] } : undefined,
+        'COLOR_MODE':s['COLOR_MODE'] ? { rich_text: [{ text: { content: s['COLOR_MODE'].name } }] } : undefined,
+        'MODEL':     { rich_text: [{ text: { content: lastMode === 'hd' ? 'FLUX Dev' : lastMode === 'preview' ? 'FLUX Schnell' : '—' } }] },
+        'COST':      { rich_text: [{ text: { content: lastMode === 'hd' ? '~$0.025' : lastMode === 'preview' ? '~$0.003' : '—' } }] },
+        'STATUS':    { select: { name: lastImgUrl ? 'generated' : 'prompt_ready' } },
+        'PROMPT':    { rich_text: [{ text: { content: promptText.slice(0, 2000) } }] },
+        'IMAGE':     lastImgUrl ? { url: lastImgUrl } : undefined,
+        'DATE':      { rich_text: [{ text: { content: today } }] },
+        'RATING':    { number: 0 },
+      }
+    };
+
+    // undefined 프로퍼티 제거
+    Object.keys(body.properties).forEach(k => {
+      if (body.properties[k] === undefined) delete body.properties[k];
+    });
+
+    const res = await fetch('https://notion-proxy.soun0009.workers.dev/v1/pages', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json',
+        'Notion-Version': '2022-06-28',
+      },
+      body: JSON.stringify(body)
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      // CORS 오류 안내
+      if (res.status === 0 || !res.status) {
+        throw new Error('CORS 오류 — 아래 안내를 확인해주세요.');
+      }
+      if (res.status === 401) throw new Error('시크릿이 잘못됐습니다. 재확인해주세요.');
+      if (res.status === 404) throw new Error('DB를 찾을 수 없습니다. Integration 연결 확인해주세요.');
+      throw new Error(err.message || `오류 ${res.status}`);
+    }
+
+    const result = await res.json();
+    setNotionStatus('✓ 노션에 저장 완료! ' + recipeName, 'ok');
+
+  } catch(e) {
+    if (e.message.includes('CORS') || e.message.includes('fetch')) {
+      setNotionStatus('⚠️ CORS 제한 — 노션 API는 브라우저 직접 호출 불가. 프록시 설정 필요.', 'warn');
+    } else {
+      setNotionStatus('오류: ' + e.message, 'err');
+    }
+    console.error(e);
+  } finally {
+    document.getElementById('btnNotionSave').disabled = false;
+  }
+}
+
+// 노션 섹션도 완료시 표시
+const _origFalCheck = function() {
+  const steps = getSteps();
+  const allDone = Object.keys(selections).length >= steps.length && steps.length > 0;
+  const notionSec = document.getElementById('notionSection');
+  if (notionSec) notionSec.style.display = allDone ? 'block' : 'none';
+};
+
+
+render();
+</script>
+
+</body></html>
