@@ -1083,9 +1083,9 @@ async function generateFal(mode) {
 
   // 해상도 설정 — FLUX Schnell은 width/height 대신 image_size 사용
   const isPreview = mode === 'preview';
-  // preview: 256x64 (4:1), HD: 1024x256 (4:1)
-  const width  = isPreview ? 256  : 1024;
-  const height = isPreview ? 64   : 256;
+  // preview: 512x128 (4:1), HD: 1024x256 (4:1)
+  const width  = isPreview ? 512  : 1024;
+  const height = isPreview ? 128   : 256;
   const steps  = isPreview ? 2    : 28;     // Schnell=2, Dev=28
   const costEst = isPreview ? '~$0.003' : '~$0.025';
 
